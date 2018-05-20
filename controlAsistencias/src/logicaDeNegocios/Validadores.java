@@ -84,6 +84,13 @@ public class Validadores {
     if(nombreAlumno.length() == 1) {
       throw new ExcepcionPersonal("No puede ingresar un nombre de solo 1 letra");
     }
+    
+  }
+  
+  public void validarExisteMatriculaNrc(String matricula, int nrc) throws ExcepcionPersonal {
+    if(consultar.existeMatriculaAlumno(matricula, nrc)) {
+      throw new ExcepcionPersonal("No puede registrar la misma matrícula en la misma E.E");
+    }
   }
   
   public void validarMatricula(String matricula) throws ExcepcionPersonal {
@@ -94,6 +101,14 @@ public class Validadores {
     
     if(matricula.length() < 9 || matricula.length() > 9){
       throw new ExcepcionPersonal("Matrícula no válida");
+    }
+   
+  }
+  
+  public void validarNombreCompleto(String nombre, String apellidoPat,
+      String apellidoMat, int nrc) throws ExcepcionPersonal {
+    if(consultar.existeNombreCompleto(nombre, apellidoPat, apellidoMat, nrc)) {
+      throw new ExcepcionPersonal("No puede ingresar un alumno con el mismo nombre");
     }
   }
   
@@ -158,6 +173,23 @@ public class Validadores {
     }
   }
   
+  public void validarAsistenciaAlumno(String asistencia) throws ExcepcionPersonal {
+        
+    if(asistencia.equals("")) {
+      throw new ExcepcionPersonal("La asistencia no puede estar vacia "
+          + "(ingrese 0 para dejarlo vacio)");
+    }
+    
+    if(asistencia.length() > 3) {
+      throw new ExcepcionPersonal("La asistencia no puede ser tan grande");
+    }
+    
+    if(!validarAsistencia(asistencia)) {
+      throw new ExcepcionPersonal("La asistencias deben ser un número");
+    }
+    
+  }
+    
   public Integer validarNrc(String nrc) {
     Integer nrcValidado;
     try {
@@ -176,6 +208,21 @@ public class Validadores {
       noClasesValidado = null;
     }
     return noClasesValidado;
+  }
+  
+  public boolean validarAsistencia(String asistencia) {
+    
+    boolean esNumero;
+    Integer noAsistencia;
+    
+    try {
+      noAsistencia = Integer.parseInt(asistencia);
+      esNumero = true;
+    } catch (Exception exception) {
+      esNumero = false;
+    }
+    
+    return esNumero;
   }
   
 }

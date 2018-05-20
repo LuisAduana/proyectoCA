@@ -54,7 +54,6 @@ public class VentanaConsultaExperiencia extends JDialog implements ActionListene
     panelConsulta.setBounds(0, 0, 500, 400);
     panelConsulta.setLayout(null);
     this.add(panelConsulta);
-    cargarLabelTitulo();
     cargarLabels();
     cargarTextFields();
     cargarBotones();
@@ -162,9 +161,6 @@ public class VentanaConsultaExperiencia extends JDialog implements ActionListene
     labelNoClases.setLayout(null);
     panelConsulta.add(labelNoClases);
     
-  }
-  
-  private void cargarLabelTitulo() {
     labelTitulo = new JLabel();
     labelTitulo.setBounds(50, 25, 400, 30);
     labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -210,26 +206,57 @@ public class VentanaConsultaExperiencia extends JDialog implements ActionListene
       if("".equals(idExp)) {
         JOptionPane.showMessageDialog(null, "Debe buscar un usuario para eliminarlo");
       } else {
-        int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas eliminar la"
-            + " E.E?");
-        if(JOptionPane.OK_OPTION == respuesta){
-          EliminacionBaseDatos eliminar = new EliminacionBaseDatos();
-          if(eliminar.eliminarExperiencia(idExp)) {
-            JOptionPane.showMessageDialog(null, "Experiencia eliminada con éxito");
-            nuevo.setVisible(false);
-            buscar.setVisible(true);
-            nrcBuscar.setEditable(true);
-            nombreTexto.setEditable(false);
-            nrcTexto.setEditable(false);
-            noClasesTexto.setEditable(false);
-            limpiarVentana();
+        int respuesta = 0;
+        respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas eliminar la"
+            + " E.E?", "ALERTA", respuesta);
+        if(respuesta == JOptionPane.YES_OPTION) {
+          ConsultasBaseDatos consultar = new ConsultasBaseDatos();
+          boolean existenAlumnos = consultar.consultarExitenAlumnos(idExp);
+          if(existenAlumnos) {
+            int segundaRespuesta = 0;
+            respuesta = JOptionPane.showConfirmDialog(null, "Hay alumnos registrados en esta E.E "
+                + "si la elimina, \n todos los alumnos registrados de la E.E serán eliminados", 
+                "ALERTA", segundaRespuesta);
+            if(respuesta == JOptionPane.YES_OPTION){
+              if(eliminarTodosAlumnos(idExp)) {
+                eliminarSinExistencia(idExp);
+              } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar "
+                    + "eliminar alumnos de la E.E");
+              }
+            } else {
+              // Si el dialogo no se confirma simplemente no hacer nada
+            }
+            
           } else {
-            JOptionPane.showMessageDialog(null, "Error al eliminar Experiencia");
+            eliminarSinExistencia(idExp);
           }
         } else {
-          // Si el dialogo no se confirma entonces simplemente no se hace nada
+          // Si el dialogo no se confirma simplemente no se hace nada
         }
       }
+  }
+  
+  private boolean eliminarTodosAlumnos(String idExp) {
+    EliminacionBaseDatos eliminar = new EliminacionBaseDatos();
+    int nrcBuscar = Integer.parseInt(idExp);
+    return eliminar.eliminarTodosAlumnos(nrcBuscar);
+  }
+  
+  private void eliminarSinExistencia(String idExp) {
+    EliminacionBaseDatos eliminar = new EliminacionBaseDatos();
+    if(eliminar.eliminarExperiencia(idExp)) {
+      JOptionPane.showMessageDialog(null, "Experiencia eliminada con éxito");
+      nuevo.setVisible(false);
+      buscar.setVisible(true);
+      nrcBuscar.setEditable(true);
+      nombreTexto.setEditable(false);
+      nrcTexto.setEditable(false);
+      noClasesTexto.setEditable(false);
+      limpiarVentana();
+    } else {
+      JOptionPane.showMessageDialog(null, "Error al eliminar Experiencia");
+    }
   }
   
   private void modificarExperiencia() {
@@ -307,7 +334,8 @@ public class VentanaConsultaExperiencia extends JDialog implements ActionListene
           nrcBuscar.setEditable(false);
           nuevo.setVisible(true);
         } else {
-          JOptionPane.showMessageDialog(null, "NRC NO ENCONTRADO", "ERROR", JOptionPane.WARNING_MESSAGE);
+          JOptionPane.showMessageDialog(null, "NRC NO ENCONTRADO", 
+              "ERROR", JOptionPane.WARNING_MESSAGE);
         }
       } catch (ExcepcionPersonal excepcion) {
         JOptionPane.showMessageDialog(null, "" + excepcion.getMessage() + "");

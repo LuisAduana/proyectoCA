@@ -5,7 +5,6 @@ package logicaDeNegocios;
 * @author BiiR4
 */
 public class Alumno {
-  private int idAlumno;
   private String nombreCompleto;
   private String nombreAlumno;
   private String apePatAlumno;
@@ -13,15 +12,6 @@ public class Alumno {
   private String matricula;
   private boolean repite;
   private int asistencia;
-  private int idExperiencia;
-  
-  public int getIdAlumno() {
-    return idAlumno;
-  }
-  
-  public void setIdAlumno(int idAlumno) {
-    this.idAlumno = idAlumno;
-  }
   
   public String getNombeAlumno() {
     return nombreAlumno;
@@ -69,14 +59,6 @@ public class Alumno {
   
   public void setAsistencia(int asistencia) {
     this.asistencia = asistencia;
-  }
-  
-  public int getIdExperiencia() {
-    return idExperiencia;
-  }
-  
-  public void setIdExperiencia(int idExperiencia) {
-    this.idExperiencia = idExperiencia;
   }
   
   public String getNombreCompleto() {

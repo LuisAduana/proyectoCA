@@ -1,15 +1,19 @@
 package interfazGrafica;
 
 import static interfazGrafica.VentanaExperiencias.nrc;
+import static interfazGrafica.VentanaExperiencias.noClases;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,7 +22,9 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import logicaDeNegocios.ConsultasBaseDatos;
+import logicaDeNegocios.RegistrarBaseDatos;
 
 /**
 *
@@ -26,41 +32,166 @@ import logicaDeNegocios.ConsultasBaseDatos;
 */
 public class VentanaAlumnos extends JPanel implements ActionListener, MouseListener{
   
-  private JButton botonActualizar;
   private JButton botonConsultarAlumno;
   private JButton botonRegistrarAlumno;
   private JButton regresar;
+  private JComboBox comboTablas;
   private JLabel labelImagenLogoUv;
   private JLabel labelTitulo;
   private JScrollPane paneTabla;
   private JTable tablaAlumnos;
+  private JTable tablaAlumnosExtraordinario;
+  private JTable tablaAlumnosOrdinario;
+  private JTable tablaAlumnosTitulos;
+  private int porcentajeOrdinario = 0;
+  private int porcentajeExtraordinario = 0;
+  private int porcentajeTitulo = 0;
   
   VentanaAlumnos(){
     setBounds(0, 0, 540, 650);
     setLayout(null);
-    setBackground(Color.YELLOW);
+    setBackground(Color.white);
     cargarLabelLogo();
     cargarLabelTitulo();
     cargarBotones();
+    cargarComboBox();
     setVisible(true);
   }
   
-  private void construirTabla() {
+  private void cargarComboBox() {
+    comboTablas = new JComboBox();
+    comboTablas.addItem("LISTAR");
+    comboTablas.addItem("TODOS");
+    comboTablas.addItem("ORDI");
+    comboTablas.addItem("EXTRA");
+    comboTablas.addItem("TITULO");
+    comboTablas.setBounds(430, 150, 70, 20);
+    comboTablas.setLayout(null);
+    comboTablas.addActionListener(this);
+    this.add(comboTablas);
+
+  }
+  
+  private void construirTablaAsistencia() {
     
     ConsultasBaseDatos consulta = new ConsultasBaseDatos();
     String titulos[] = {"Nombre", "Ape. Paterno", "Ape. Materno", "Asistencia"};
-    String informacion[][] = consulta.obtenerMatrizAlumno(nrc);
-    tablaAlumnos = new JTable(informacion, titulos){
+    tablaAlumnos = new JTable();
+    final Class[] tiposColumnas = new Class[] {
+      java.lang.String.class,
+      java.lang.String.class,
+      java.lang.String.class,
+      JButton.class
+    };
+    Object informacion[][] = consulta.obtenerMatrizAlumno(nrc);
+    
+     tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(informacion, titulos){
+      Class[] tipos = tiposColumnas;
+      
+      @Override
+      public Class getColumnClass(int columnIndex) {
+        return tipos[columnIndex];
+      }
+      
+      @Override
+      public boolean isCellEditable(int row, int column) {
+        return !(this.getColumnClass(column).equals(JButton.class));
+      }
+    });
+     
+    tablaAlumnos.setDefaultRenderer(JButton.class, new TableCellRenderer() {
+      @Override
+      public Component getTableCellRendererComponent(JTable jtable, Object objeto, boolean bln, 
+          boolean bln1, int i, int i1) {
+        return (Component) objeto;
+      }
+    });
+    
+    tablaAlumnos.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e){
+        int fila = tablaAlumnos.rowAtPoint(e.getPoint());
+        int columna = tablaAlumnos.columnAtPoint(e.getPoint());
+        String nombreAlumno = "";
+        String apellidoPatAlumno = "";
+        String apellidoMatAlumno = "";
+        
+        if(tablaAlumnos.getModel().getColumnClass(columna).equals(JButton.class)) {
+          for(int i = 0; i < tablaAlumnos.getModel().getColumnCount(); i++) {
+            if(!tablaAlumnos.getModel().getColumnClass(i).equals(JButton.class)) {
+              nombreAlumno = tablaAlumnos.getModel().getValueAt(fila, 0).toString();
+              apellidoPatAlumno = tablaAlumnos.getModel().getValueAt(fila, 1).toString();
+              apellidoMatAlumno = tablaAlumnos.getModel().getValueAt(fila, 2).toString();
+            }
+          }
+          ConsultasBaseDatos consultar = new ConsultasBaseDatos();
+          int asistencia = consultar.consultarAsistencia(nombreAlumno, apellidoPatAlumno, 
+              apellidoMatAlumno, nrc);
+          System.out.println("Asistencia antes de registrar = " + asistencia);
+          asistencia = asistencia + 1;
+          
+          RegistrarBaseDatos registrar = new RegistrarBaseDatos();
+          registrar.registrarAsistencia(nombreAlumno, apellidoPatAlumno, apellidoMatAlumno,
+              nrc, asistencia);
+          System.out.println("Asistencia despues de registrar = " + asistencia);
+        }
+      }
+    
+    });
+    paneTabla.setViewportView(tablaAlumnos);
+    paneTabla.repaint();
+  }
+  
+  private void construirTablaOrdinarios() {
+    ConsultasBaseDatos consulta = new ConsultasBaseDatos();
+    String titulos[] = {"Nombre", "Ape. Paterno", "Ape. Materno"};
+    Object informacion[][] = consulta.obtenerMatrizAlumnoOrdinario(nrc, porcentajeOrdinario, 
+        noClases);
+    tablaAlumnosOrdinario = new JTable(informacion, titulos){
       @Override
       public boolean isCellEditable(int rowIndex, int colIndex) {
         return false;
       }
     };
-    tablaAlumnos.setFocusable(false);
-    JTableHeader cabecera = tablaAlumnos.getTableHeader();
+    tablaAlumnosOrdinario.setFocusable(false);
+    JTableHeader cabecera = tablaAlumnosOrdinario.getTableHeader();
     cabecera.setPreferredSize(new Dimension(10, 20));
-    tablaAlumnos.addMouseListener(this);
-    paneTabla.setViewportView(tablaAlumnos);
+    paneTabla.setViewportView(tablaAlumnosOrdinario);
+    paneTabla.repaint();
+  }
+  
+  private void construirTablaExtraordinarios() {
+    ConsultasBaseDatos consulta = new ConsultasBaseDatos();
+    String titulos[] = {"Nombre", "Ape. Paterno", "Ape. Materno"};
+    Object informacion[][] = consulta.obtenerMatrizAlumnoExtraordinario(nrc, 
+        porcentajeExtraordinario, porcentajeOrdinario);
+    tablaAlumnosExtraordinario = new JTable(informacion, titulos){
+      @Override
+      public boolean isCellEditable(int rowIndex, int colIndex) {
+        return false;
+      }
+    };
+    tablaAlumnosExtraordinario.setFocusable(false);
+    JTableHeader cabecera = tablaAlumnosExtraordinario.getTableHeader();
+    cabecera.setPreferredSize(new Dimension(10, 20));
+    paneTabla.setViewportView(tablaAlumnosExtraordinario);
+  }
+  
+  private void construirTablaTitulos() {
+    ConsultasBaseDatos consulta = new ConsultasBaseDatos();
+    String titulos[] = {"Nombre", "Ape. Paterno", "Ape. Materno"};
+    Object informacion[][] = consulta.obtenerMatrizAlumnoTitulos(nrc, 
+        porcentajeTitulo, porcentajeExtraordinario);
+    tablaAlumnosTitulos = new JTable(informacion, titulos){
+      @Override
+      public boolean isCellEditable(int rowIndex, int colIndex) {
+        return false;
+      }
+    };
+    tablaAlumnosTitulos.setFocusable(false);
+    JTableHeader cabecera = tablaAlumnosTitulos.getTableHeader();
+    cabecera.setPreferredSize(new Dimension(10, 20));
+    paneTabla.setViewportView(tablaAlumnosTitulos);
   }
   
   private void cargarTablaAlumnos() {
@@ -70,13 +201,6 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
   }
   
   private void cargarBotones() {
-    
-    botonActualizar = new JButton("REF");
-    botonActualizar.setBounds(460, 130, 40, 40);
-    botonActualizar.setLayout(null);
-    botonActualizar.addActionListener(this);
-    botonActualizar.setToolTipText("Refrescar");
-    this.add(botonActualizar);
     
     regresar = new JButton("REG");
     regresar.setBounds(430, 15, 70, 70);
@@ -126,6 +250,20 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
     labelImagenLogoUv.setLayout(null);
     this.add(labelImagenLogoUv);
   }
+  
+  public void recibirNrc(int nrcEntrante) {
+    nrc = nrcEntrante;
+  }
+  
+  public void recibirClases(int noClasesEntrante) {
+    noClases = noClasesEntrante;
+  }
+  
+  private void porcentajesAsistencias() {
+    porcentajeOrdinario = Math.round((80*noClases)/100);
+    porcentajeExtraordinario = Math.round((60*noClases)/100);
+    porcentajeTitulo = Math.round((50*noClases)/100);
+  }
 
   @Override
   public void actionPerformed(ActionEvent evento) {
@@ -148,13 +286,30 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
       ventanaConsultaAlumno = new VentanaConsultaAlumno(ventanaPrincipal, true);
     }
     
-    if(evento.getSource() == botonActualizar) {
+    if(evento.getSource() == comboTablas) {
+      
+      porcentajesAsistencias();
       cargarTablaAlumnos();
-      construirTabla();
+      
+      if(comboTablas.getSelectedItem() == "TODOS") {
+        construirTablaAsistencia();
+      }
+      
+      if(comboTablas.getSelectedItem() == "ORDI") {
+        construirTablaOrdinarios();
+      }
+      
+      if(comboTablas.getSelectedItem() == "EXTRA") {
+        construirTablaExtraordinarios();
+      }
+      
+      if(comboTablas.getSelectedItem() == "TITULO") {
+        construirTablaTitulos();
+      }
     }
     
   }
-
+  
   @Override
   public void mouseClicked(MouseEvent me) {
     

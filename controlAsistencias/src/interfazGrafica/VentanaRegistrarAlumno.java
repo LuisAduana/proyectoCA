@@ -1,5 +1,6 @@
 package interfazGrafica;
 
+import static interfazGrafica.VentanaExperiencias.nrc;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -10,7 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import logicaDeNegocios.Alumno;
 import logicaDeNegocios.ExcepcionPersonal;
+import logicaDeNegocios.RegistrarBaseDatos;
 import logicaDeNegocios.Validadores;
 
 /**
@@ -32,7 +35,7 @@ public class VentanaRegistrarAlumno extends JDialog implements ActionListener {
   private JTextField textoApeMaterno;
   private JTextField textoApePaterno;
   private JPanel panelAlumno;
-  
+    
   public VentanaRegistrarAlumno(VentanaPrincipal ventanaPrincipal, boolean modal) {
     super(ventanaPrincipal, modal);
     setSize(500, 350);
@@ -159,9 +162,25 @@ public class VentanaRegistrarAlumno extends JDialog implements ActionListener {
     String apellidoPatAlumno = textoApePaterno.getText().trim();
     try {
       validar.validarMatricula(matricula);
+      validar.validarExisteMatriculaNrc(matricula, nrc);
       validar.validarNombreAlumno(nombreAlumno);
       validar.validarApellidoMaterno(apellidoMatAlumno);
       validar.validarApellidoPaterno(apellidoPatAlumno);
+      validar.validarNombreCompleto(nombreAlumno, apellidoPatAlumno, apellidoMatAlumno, nrc);
+      Boolean esRepite = repite.isSelected();
+      Alumno alumno = new Alumno();
+      alumno.setMatricula(matricula);
+      alumno.setNombreAlumno(nombreAlumno);
+      alumno.setApePatAlumno(apellidoPatAlumno);
+      alumno.setApeMatAlumno(apellidoMatAlumno);
+      alumno.setRepite(esRepite);
+      RegistrarBaseDatos registrar = new RegistrarBaseDatos();
+      registrar.registrarAlumno(alumno, nrc);
+      textoMatricula.setText("");
+      textoNombreAlumno.setText("");
+      textoApeMaterno.setText("");
+      textoApePaterno.setText("");
+      repite.setSelected(false);
     } catch (ExcepcionPersonal excepcion) {
       JOptionPane.showMessageDialog(null, "" + excepcion.getMessage() + "");
     }

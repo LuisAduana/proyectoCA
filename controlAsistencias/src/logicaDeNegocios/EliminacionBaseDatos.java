@@ -7,16 +7,20 @@ import conexionBaseDatos.ConexionEliminar;
 * @author BiiR4
 */
 public class EliminacionBaseDatos {
+  
+  ConexionEliminar eliminar = new ConexionEliminar();
+  
+  public boolean eliminarAlumno(String matricula, int nrc) {
+    return eliminar.eliminarAlumno(matricula, nrc);
+  }
+  
+  public boolean eliminarTodosAlumnos(int nrc) {
+    
+    return eliminar.eliminarTodosAlumnos(nrc);
+  }
+  
   public boolean eliminarExperiencia(String idNrc){
-    ConexionEliminar eliminar = new ConexionEliminar();
-    boolean exito;
     
-    if(eliminar.eliminarExperienciaEducativa(idNrc)) {
-      exito = true;
-    } else {
-      exito = false;
-    }
-    
-    return exito;
+    return eliminar.eliminarExperienciaEducativa(idNrc);
   }
 }

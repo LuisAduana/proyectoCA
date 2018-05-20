@@ -7,8 +7,8 @@ package interfazGrafica;
 * @since 
 * @version 
 */
-class Main {
-  static void main(String[] args){
+public class Main {
+  public static void main(String[] args){
     VentanaPrincipal ventana = new VentanaPrincipal();
     ventana.setVisible(true);
   }

@@ -26,6 +26,7 @@ class VentanaExperiencias extends JPanel implements ActionListener, MouseListene
   
   private int fila = 0;
   static int nrc = 0;
+  static int noClases = 0;
   private JButton botonActualizar;
   private JButton botonModificarExperiencia;
   private JButton botonPasarLista;
@@ -35,11 +36,12 @@ class VentanaExperiencias extends JPanel implements ActionListener, MouseListene
   private JScrollPane paneTabla;
   private JTable tablaExperiencias;
   private String nrcSeleccionado = "";
+  private String noClasesSeleccionado = "";
       
   VentanaExperiencias() {
     setBounds(0, 0, 540, 650);
     setLayout(null);
-    setBackground(Color.BLUE);
+    setBackground(Color.WHITE);
     cargarLabelLogo();
     cargarLabelTitulo();
     cargarTablaExperiencias();
@@ -51,7 +53,7 @@ class VentanaExperiencias extends JPanel implements ActionListener, MouseListene
   private void cargarBotones() {
     
     botonActualizar = new JButton("ACT");
-    botonActualizar.setBounds(460, 150, 40, 40);
+    botonActualizar.setBounds(430, 150, 70, 30);
     botonActualizar.setLayout(null);
     botonActualizar.addActionListener(this);
     botonActualizar.setToolTipText("Refrescar");
@@ -153,9 +155,11 @@ class VentanaExperiencias extends JPanel implements ActionListener, MouseListene
     if(evento.getSource() == botonPasarLista) {
       if(!nrcSeleccionado.equals("")) {
         nrc = Integer.parseInt(nrcSeleccionado);
-        VentanaAlumnos panelAlumnos = new VentanaAlumnos();
+        noClases = Integer.parseInt(noClasesSeleccionado);
         setVisible(false);
-        panelAlumnos.setVisible(true);
+        VentanaAlumnos panelAlumnos = new VentanaAlumnos();
+        panelAlumnos.recibirNrc(nrc);
+        panelAlumnos.recibirClases(noClases);
       } else {
         JOptionPane.showMessageDialog(null, "Seleccione una Experiencia Educativa antes de pasar "
             + "lista");
@@ -167,6 +171,7 @@ class VentanaExperiencias extends JPanel implements ActionListener, MouseListene
   public void mouseClicked(MouseEvent evento) {
     fila = tablaExperiencias.getSelectedRow();
     nrcSeleccionado = (tablaExperiencias.getModel().getValueAt(fila, 1).toString());
+    noClasesSeleccionado = (tablaExperiencias.getModel().getValueAt(fila, 2).toString());
   }
 
   @Override

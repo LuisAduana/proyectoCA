@@ -11,6 +11,25 @@ public class RegistrarBaseDatos {
   ConexionRegistros registro = new ConexionRegistros();
   Validadores validador = new Validadores();
   
+  public void modificarAlumno(Alumno alumno, int nrc, String matricula) {
+    boolean exitoso = registro.modificarAlumno(alumno, nrc, matricula);
+    if(exitoso) {
+      JOptionPane.showMessageDialog(null, "Alumno modificado con éxito");
+    } else {
+      JOptionPane.showMessageDialog(null, "Fallo en modificar alumno");
+    }
+    
+  }
+  
+  public void registrarAlumno(Alumno alumno, int nrc) {
+    boolean exitoso = registro.registrarAlumno(alumno, nrc);
+    if(exitoso) {
+      JOptionPane.showMessageDialog(null, "Registrado con éxito");
+    } else {
+      JOptionPane.showMessageDialog(null, "Fallo en el registro");
+    }
+  }
+  
   public void modificarExperiencia(ExperienciaEducativa experiencia, int nrcEntero) {
     boolean exitoso = registro.modificarExperiencia(experiencia, nrcEntero);
     if(exitoso){
@@ -26,6 +45,15 @@ public class RegistrarBaseDatos {
       JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
     } else {
       JOptionPane.showMessageDialog(null, "FALLO EN REGISTRO");
+    }
+  }
+  
+  public void registrarAsistencia(String nombre, String apellidoPat, String apellidoMat, 
+      int nrc, int asistencia) {
+    if(registro.registrarAsistencia(nombre, apellidoPat, apellidoMat, nrc, asistencia)) {
+      JOptionPane.showMessageDialog(null, "Asistencia Registrada");
+    } else {
+      JOptionPane.showMessageDialog(null, "Error al registrar asistencia");
     }
   }
   

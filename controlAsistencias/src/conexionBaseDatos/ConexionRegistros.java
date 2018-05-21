@@ -9,11 +9,18 @@ import logicaDeNegocios.Alumno;
 import logicaDeNegocios.ExperienciaEducativa;
 
 /**
- *
- * @author BiiR4
- */
+* Clase encargada de realizar todos los registros necesarios a la Base de Datos.
+* @author Luis Bonilla
+* @version 1.0
+*/
 public class ConexionRegistros {
   
+  /**
+  * Método que encargado de realizar el registro del Alumno en la BD.
+  * @param alumno Recibe un Objeto Alumno que es el que se va a registrar en la Base de Datos.
+  * @param nrc Recibe un NRC para saber en qué Experiencia será registrado el Alumno.
+  * @return Regresa un boolean para verificar si se realizó con éxito el registro del alumno o no.
+  */
   public boolean registrarAlumno(Alumno alumno, int nrc) {
     boolean exitoso;
     Connection connection = null;
@@ -41,6 +48,13 @@ public class ConexionRegistros {
     return exitoso;
   }
   
+  /**
+  * Método encargado de realizar una modificación a un Alumno.
+  * @param alumno Recibe un Objeto Alumno que es el que se va a modificar en la Base de Datos.
+  * @param nrc Recibe un NRC para saber de qué Experiencia es el Alumno registrado
+  * @param matricula Recibe una matrícula para saber qué alumno se modificará
+  * @return Regresa true si se modificó correctamente, false de otra manera
+  */
   public boolean modificarAlumno(Alumno alumno, int nrc, String matricula) {
     
     boolean exitoso;
@@ -72,6 +86,11 @@ public class ConexionRegistros {
     return exitoso;
   }
   
+  /**
+  * Método encargado de registrar una nuevoa Experiencia en la Base de Datos.
+  * @param experiencia Recibe un objeto de tipo ExperienciaEducativa que se registrará en la BD
+  * @return Regresa true si se realizó el registro correctamente, false de otro modo
+  */
   public boolean registrarExperiencia(ExperienciaEducativa experiencia) {
     boolean exitoso;
     Connection connection = null;
@@ -95,7 +114,13 @@ public class ConexionRegistros {
     }
     return exitoso;
   }
-
+  
+  /**
+  * Método encargado de realizar la modificación de una Experiencia Educativa
+  * @param experiencia Recibe un objeto de tipo ExperienciaEducativa que será lo que se modfique.
+  * @param nrcEntero Recibe un NRC que indica qué Experiencia se modificará
+  * @return Regresa true si se modificó con éxito, false de otro modo
+  */
   public boolean modificarExperiencia(ExperienciaEducativa experiencia, int nrcEntero) {
     
     boolean exitoso;
@@ -123,6 +148,15 @@ public class ConexionRegistros {
     return exitoso;
   }
   
+  /**
+  * Método encargado de registrar una asistencia en la Base de Datos.
+  * @param nombre Recibe el nombre del alumno a quien se le registrará la asistencia
+  * @param apellidoPat Recibe el apellido paterno del alumno a quien se le registrará la asistencia
+  * @param apellidoMat Recibe el apellido materno del alumno a quien se le registrará la asistencia
+  * @param nrc Recibe el NRC del alumno a quien se le registrará la asistencia
+  * @param asistencia Recibe la nueva asistencia que tendrá el alumno.
+  * @return Regresa true si se registró con éxito la asistencia, false de otro modo.
+  */
   public boolean registrarAsistencia(String nombre, String apellidoPat, String apellidoMat, 
       int nrc, int asistencia) {
     

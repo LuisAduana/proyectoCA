@@ -53,8 +53,8 @@ public class Validadores {
       throw new ExcepcionPersonal("El Apellido Paterno del Alumno es demasiado grande");
     }
     
-    if(apellidoPatAlumno.length() == 2) {
-      throw new ExcepcionPersonal("No puede ingresar apellidos de solo 2 letras");
+    if(apellidoPatAlumno.length() < 2) {
+      throw new ExcepcionPersonal("No puede ingresar apellidos menor de 2 letras");
     }
   }
   
@@ -121,7 +121,7 @@ public class Validadores {
       throw new ExcepcionPersonal("Digite un NRC de 5 dígitos");
     }
     
-    if(nrc > 99999.01) {
+    if(nrc > 99999.00000000000000001) {
       throw new ExcepcionPersonal("Digite un NRC de 5 dígitos");
     }
     
@@ -161,7 +161,7 @@ public class Validadores {
   
   public void validarNoDeClases(int noClases) throws ExcepcionPersonal {
     if(noClases == 0) {
-      throw new ExcepcionPersonal("El No. de Clases no puede estar vacio");
+      throw new ExcepcionPersonal("El No. de Clases no puede estar vacío");
     }
     
     if(noClases < 10) {
@@ -184,8 +184,8 @@ public class Validadores {
       throw new ExcepcionPersonal("La asistencia no puede ser tan grande");
     }
     
-    if(!validarAsistencia(asistencia)) {
-      throw new ExcepcionPersonal("La asistencias deben ser un número");
+    if(validarAsistencia(asistencia) == false) {
+      throw new ExcepcionPersonal("Las asistencias deben ser un número");
     }
     
   }

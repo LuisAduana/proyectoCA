@@ -130,15 +130,15 @@ class VentanaRegistrarExperiencia extends JDialog implements ActionListener {
   }
   
   private void registrar() {
+    Validadores validar = new Validadores();
     RegistrarBaseDatos registrar = new RegistrarBaseDatos();
-    Integer nrc = registrar.enviarNrc(nrcTexto.getText().trim());
-    Integer noClases = registrar.enviarNoClases(noClasesTexto.getText().trim());
+    Integer nrc = validar.validarNrc(nrcTexto.getText().trim());
+    Integer noClases = validar.validarNoClases(noClasesTexto.getText().trim());
     if(nrc != null) {
       if(noClases != null) {
         int nrcEntero = Integer.parseInt(nrcTexto.getText().trim());
         int noClasesEntero = Integer.parseInt(noClasesTexto.getText().trim());
         String nombreExperiencia = nombreTexto.getText().trim();
-        Validadores validar = new Validadores();
         try {
           validar.validarIntNrc(nrcEntero);
           validar.validarNoDeClases(noClasesEntero);

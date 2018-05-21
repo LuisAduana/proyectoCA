@@ -11,11 +11,17 @@ import logicaDeNegocios.Alumno;
 import logicaDeNegocios.ExperienciaEducativa;
 
 /**
-*
-* @author BiiR4
+* Clase encargada de realizar exclusivamente consultas a la Base de Datos
+* @author Luis Bonilla
+* @version 1.0
 */
 public class ConexionConsultas {
   
+  /**
+  * Método encargado de buscar todos los alumnos con una NRC dada.
+  * @param nrc Recibe un NRC que indica los alumnos a buscar
+  * @return Regresa una Lista de objetos Alumno si se realizó con éxito
+  */
   public ArrayList<Alumno> buscarAlumnos(int nrc) {
     ConexionBaseDatos conexion = new ConexionBaseDatos();
     ArrayList<Alumno> listaAlumnos = new ArrayList<Alumno>();
@@ -44,6 +50,15 @@ public class ConexionConsultas {
     return listaAlumnos;
   }
   
+  
+  /**
+  * Método encargado de realizar búsquedas de alumnos que tienen derecho a presentar el 
+  * examen Ordinario.
+  * @param nrc Recibe un NRC que indica de qué Experiencia se buscarán los alumnos
+  * @param porcentajeOrdinario Recibe número de asistencias mínimas que debe tener el alumno
+  * @param noClases Recibe número de asistencias máximas que debe tener el alumno
+  * @return Regresa una lista de objetos Alumno si la búsqueda se realiza con éxito
+  */
   public ArrayList<Alumno> buscarAlumnosOrdinario(int nrc, int porcentajeOrdinario, int noClases) {
     ConexionBaseDatos conexion = new ConexionBaseDatos();
     ArrayList<Alumno> listaAlumnos = new ArrayList<Alumno>();
@@ -71,6 +86,14 @@ public class ConexionConsultas {
     return listaAlumnos;
   }
   
+  /**
+  * Método encargado de realizar búsquedas de alumnos que tienen derecho a presentar el 
+  * examen extraordinario.
+  * @param nrc Recibe un NRC que indica de qué Experiencia se buscarán los alumnos
+  * @param porcentajeExtraordinario Recibe número de asistencias mínimas que debe tener el alumno
+  * @param porcentajeOrdinario Recibe número de asistencias máximas que debe tener el alumno
+  * @return Regresa una lista de objetos Alumno si la búsqueda se realiza con éxito
+  */
   public ArrayList<Alumno> buscarAlumnosExtraordinario(int nrc, int porcentajeExtraordinario, 
       int porcentajeOrdinario) {
     ConexionBaseDatos conexion = new ConexionBaseDatos();
@@ -100,6 +123,14 @@ public class ConexionConsultas {
     return listaAlumnos;
   }
   
+  /**
+  * Método encargado de realizar búsquedas de alumnos que tienen derecho a presentar el 
+  * examen de título
+  * @param nrc Recibe un NRC que indica de qué Experiencia se buscarán los alumnos
+  * @param porcentajeTitulos Recibe número de asistencias mínimas que debe tener el alumno
+  * @param porcentajeExtraordinario Recibe número de asistencias máximas que debe tener el alumno
+  * @return Regresa una lista de objetos Alumno si la búsqueda se realiza con éxito
+  */
   public ArrayList<Alumno> buscarAlumnosTitulos(int nrc, int porcentajeTitulos, 
       int porcentajeExtraordinario) {
     ConexionBaseDatos conexion = new ConexionBaseDatos();
@@ -129,6 +160,10 @@ public class ConexionConsultas {
     return listaAlumnos;
   }
   
+  /**
+  * Método encargado de realizar una búsqueda de Experiencias Educativas
+  * @return Regresa una lista de objetos Alumno si la búsqueda se realizó con éxito
+  */
   public ArrayList<ExperienciaEducativa> buscarExperiencias(){
     ConexionBaseDatos conexion = new ConexionBaseDatos();
     ArrayList<ExperienciaEducativa> listaExperiencias = new ArrayList<ExperienciaEducativa>();
@@ -156,6 +191,11 @@ public class ConexionConsultas {
     return listaExperiencias;
   }
 
+  /**
+  * Método encargado de buscar una Experiencia educativa.
+  * @param nrc Recibe un NRC para saber que Experiencia Educativa
+  * @return Regresa un Objeto ExperienciaEducativa si la búsqueda se realizó con éxito
+  */
   public ExperienciaEducativa buscarEsperiencia(String nrc) {
     ConexionBaseDatos conexion = new ConexionBaseDatos();
     ExperienciaEducativa experiencia = null;
@@ -188,6 +228,12 @@ public class ConexionConsultas {
     return experiencia;
   }
   
+  /**
+  * Método encargado de buscar un solo Alumno en la Base de Datos.
+  * @param matricula Recibe una matrícula que indica el alumno a buscar
+  * @param nrc Recibe un NRC que indica de qué Experiencia es el Alumno a buscar
+  * @return Regresa un objeto Alumno si la búsqueda se hace con éxito
+  */
   public Alumno buscarAlumno(String matricula, int nrc) {
     ConexionBaseDatos conexion = new ConexionBaseDatos();
     Alumno alumno = null;
@@ -224,6 +270,11 @@ public class ConexionConsultas {
     return alumno;
   }
   
+  /**
+  * Método encargado de buscar la existencia de algunos alumnos en la Base de Datos.
+  * @param nrc Recibe un NRC que indica de que Experiencia son los Alumnos a Buscar
+  * @return Regresa true en caso de que exista algun alumno con los parámetros dados, false de lo contrario
+  */
   public boolean existenAlumnos(int nrc) {
     boolean existeNrc = false;
     ConexionBaseDatos conexion = new ConexionBaseDatos();
@@ -256,6 +307,15 @@ public class ConexionConsultas {
     return existeNrc;
   }
   
+  /**
+  * Método encargado de saber si existe un Alumno cuyo Nombre, apellido paterno y apellido materno
+  * ya está registrado en la Base de Datos.
+  * @param nombre Recibe un nombre que será buscado en la Base de Datos
+  * @param apellidoPat Recibe un apellido paterno que será buscado en la Base de Datos
+  * @param apellidoMat Recibe un apellido materno que será buscado en la Base de Datos
+  * @param nrc Recibe un NRC que indica de qué Experiencia Educativa será buscado en Nombre Completo
+  * @return Regresa true en caso de que exista un alumno con los parámetros, false de lo contrario
+  */
   public boolean existeNombreCompleto(String nombre, String apellidoPat, String apellidoMat, 
       int nrc) {
     boolean existeMatricula = false;
@@ -293,6 +353,12 @@ public class ConexionConsultas {
     return existeMatricula;
   }
   
+  /**
+  * Método encargado de buscar una matrícula que ya exista en la Base de Datos.
+  * @param matricula Recibe una Matricula que será la que se va a buscar
+  * @param nrc Recibe un NRC que indica de qué Experiencia Educativa será la Matricula
+  * @return Regresa true en caso de que ya exista una matricula registrada, false de otra manera
+  */
   public boolean existeMatriculaAlumno(String matricula, int nrc) {
     boolean existeMatricula = false;
     ConexionBaseDatos conexion = new ConexionBaseDatos();
@@ -326,6 +392,11 @@ public class ConexionConsultas {
     return existeMatricula;
   }
   
+  /**
+  * Método encargado de buscar la existencia de un nombre de Experiencia Educativa.
+  * @param nombreExperiencia Recibe el Nombre de la Experiencia a buscar
+  * @return Regresa true en caso de que exista el nombre ya registrado, false de otro modo
+  */
   public boolean existeNombreExperiencia(String nombreExperiencia) {
     boolean existeExperiencia = false;
     ConexionBaseDatos conexion = new ConexionBaseDatos();
@@ -358,6 +429,11 @@ public class ConexionConsultas {
     return existeExperiencia;
   }
   
+  /**
+  * Método encargado de buscar si existe una Experiencia Educativa con un NRC ingresado
+  * @param nrc Recibe el NRC que indica la Experiencia que se buscará
+  * @return Regresa true en caso de que se encuentre una Experiencia con el NRC, false de otro modo
+  */
   public boolean existeExperiencia(int nrc) {
     boolean existeExperiencia = false;
     ConexionBaseDatos conexion = new ConexionBaseDatos();
@@ -389,7 +465,15 @@ public class ConexionConsultas {
     
     return existeExperiencia;
   }
-  
+
+  /**
+   * Método encargado de buscar la asistencia que tiene un Alumno en la Base de Datos.
+   * @param nombre Recibe el nombre del Alumno a buscar
+   * @param apellidoPat Recibe el apellido Paterno del Alumno a buscar
+   * @param apellidoMat Recibe el apellido Materno del Alumno a buscar
+   * @param nrc Recibe un NRC que indica de qué Experiencia será el alumno a buscar
+   * @return Regresa el número de Asistencias del alumno encontrado con los parámetros dados
+   */
   public int buscarAsistencia(String nombre, String apellidoPat, String apellidoMat, int nrc) {
     ConexionBaseDatos conexion = new ConexionBaseDatos();
     Connection connection = null;

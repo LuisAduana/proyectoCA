@@ -20,7 +20,7 @@ import logicaDeNegocios.Validadores;
 *
 * @author BiiR4
 */
-public class VentanaConsultaExperiencia extends JDialog implements ActionListener{
+class VentanaConsultaExperiencia extends JDialog implements ActionListener{
 
   private JButton buscar;
   private JButton eliminar;
@@ -264,16 +264,17 @@ public class VentanaConsultaExperiencia extends JDialog implements ActionListene
     if("".equals(idExp)) {
       JOptionPane.showMessageDialog(null, "Debe buscar un usuario para modificarlo");
     } else {
+      Validadores validar = new Validadores();
       int nrcExperiencia = Integer.parseInt(idNrc.getText());
       RegistrarBaseDatos registrar = new RegistrarBaseDatos();
-      Integer nrc = registrar.enviarNrc(nrcTexto.getText().trim());
-      Integer noClases = registrar.enviarNoClases(noClasesTexto.getText().trim());
+      Integer nrc = validar.validarNrc(nrcTexto.getText().trim());
+      Integer noClases = validar.validarNoClases(noClasesTexto.getText().trim());
       if(nrc != null) {
         if(noClases != null) {
           int nrcEntero = Integer.parseInt(nrcTexto.getText().trim());
           int noDeClases = Integer.parseInt(noClasesTexto.getText().trim());
           String nombreExperiencia = nombreTexto.getText().trim();
-          Validadores validar = new Validadores();
+          
           try {
 
             validar.validarModificarIntNrc(nrcEntero);
@@ -310,11 +311,12 @@ public class VentanaConsultaExperiencia extends JDialog implements ActionListene
   }
   
   private void consultarExperiencia() {
+    Validadores validar = new Validadores();
     RegistrarBaseDatos registrar = new RegistrarBaseDatos();
-    Integer nrc = registrar.enviarNrc(nrcBuscar.getText().trim());
+    Integer nrc = validar.validarNrc(nrcBuscar.getText().trim());
     if(nrc != null) {
       int nrcEntero = Integer.parseInt(nrcBuscar.getText().trim());
-      Validadores validar = new Validadores();
+      
       try {
         
         validar.validarNrcBuscar(nrcEntero);

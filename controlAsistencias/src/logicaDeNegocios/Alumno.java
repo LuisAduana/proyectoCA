@@ -1,8 +1,9 @@
 package logicaDeNegocios;
 
 /**
-*
-* @author BiiR4
+* Clase que realiza la estructura del Objeto Alumno
+* @author Luis Aduana
+* @version 1.0
 */
 public class Alumno {
   private String nombreCompleto;

@@ -1,8 +1,9 @@
 package logicaDeNegocios;
 
 /**
-*
-* @author BiiR4
+* Clase que realiza la construcción del Objecto ExperienciaEducativa
+* @author Luis Bonilla
+* @version 1.0
 */
 public class ExperienciaEducativa {
   private String nombreExperiencia;

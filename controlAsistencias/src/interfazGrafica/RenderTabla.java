@@ -7,15 +7,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * @author BiiR4
+ * @author Luis Bonilla
  */
-public class RenderTabla extends DefaultTableCellRenderer {
+class RenderTabla extends DefaultTableCellRenderer {
 
   @Override
   public Component getTableCellRendererComponent(JTable jtable, Object value, 
       boolean bln, boolean bln1, int i, int i1) {
     
-      if(value instanceof JButton) {
+      if (value instanceof JButton) {
         JButton boton = (JButton)value;
         return boton;
       }

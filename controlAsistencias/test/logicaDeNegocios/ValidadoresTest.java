@@ -68,6 +68,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarApellidoPaterno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarApellidoPaternoUno() throws ExcepcionPersonal {
@@ -83,6 +84,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarApellidoPaterno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarApellidoPaternoDos() throws ExcepcionPersonal {
@@ -98,6 +100,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarApellidoPaterno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarApellidoPaternoTres() throws ExcepcionPersonal {
@@ -116,6 +119,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarApellidoMaterno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarApellidoMaternoUno() throws ExcepcionPersonal {
@@ -131,6 +135,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarApellidoMaterno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarApellidoMaternoDos() throws ExcepcionPersonal {
@@ -149,6 +154,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarApellidoMaterno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test 
   public void testValidarApellidoMaternoTres() throws ExcepcionPersonal {
@@ -164,6 +170,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarNombreAlumno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNombreAlumnoUno() throws ExcepcionPersonal {
@@ -178,6 +185,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarNombreAlumno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNombreAlumnoDos() throws ExcepcionPersonal {
@@ -195,6 +203,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarNombreAlumno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNombreAlumnoTres() throws ExcepcionPersonal {
@@ -209,6 +218,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarExisteMatriculaNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarExisteMatriculaNrcUno() throws ExcepcionPersonal {
@@ -225,6 +235,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarExisteMatriculaNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarExisteMatriculaNrcDos() throws ExcepcionPersonal {
@@ -241,6 +252,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarExisteMatriculaNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarExisteMatriculaNrcTres() throws ExcepcionPersonal {
@@ -257,6 +269,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarMatricula method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarMatriculaUno() throws ExcepcionPersonal {
@@ -271,6 +284,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarMatricula method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarMatriculaDos() throws ExcepcionPersonal {
@@ -285,6 +299,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarMatricula method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarMatriculaTres() throws ExcepcionPersonal {
@@ -299,6 +314,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarNombreCompleto method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNombreCompleto() throws ExcepcionPersonal {
@@ -316,6 +332,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarIntNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarIntNrcUno() throws ExcepcionPersonal {
@@ -330,6 +347,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarIntNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarIntNrcDos() throws ExcepcionPersonal {
@@ -344,6 +362,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarIntNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarIntNrcTres() throws ExcepcionPersonal {
@@ -358,6 +377,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarIntNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarIntNrcCuatro() throws ExcepcionPersonal {
@@ -372,6 +392,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarModificarIntNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarModificarIntNrcUno() throws ExcepcionPersonal {
@@ -386,6 +407,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarModificarIntNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarModificarIntNrcDos() throws ExcepcionPersonal {
@@ -400,6 +422,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarModificarIntNrc method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarModificarIntNrcTres() throws ExcepcionPersonal {
@@ -414,6 +437,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarNrcBuscar method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNrcBuscarUno() throws ExcepcionPersonal {
@@ -428,6 +452,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarNrcBuscar method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNrcBuscarDos() throws ExcepcionPersonal {
@@ -442,6 +467,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarNrcBuscar method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNrcBuscarTres() throws ExcepcionPersonal {
@@ -456,6 +482,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarNoDeClases method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNoDeClasesUno() throws ExcepcionPersonal {
@@ -470,6 +497,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarNoDeClases method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNoDeClasesDos() throws ExcepcionPersonal {
@@ -484,6 +512,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarNoDeClases method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarNoDeClasesTres() throws ExcepcionPersonal {
@@ -498,6 +527,7 @@ public class ValidadoresTest {
 
   /**
   * Test of validarAsistenciaAlumno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarAsistenciaAlumnoUno() throws ExcepcionPersonal {
@@ -512,6 +542,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarAsistenciaAlumno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarAsistenciaAlumnoDos() throws ExcepcionPersonal {
@@ -526,6 +557,7 @@ public class ValidadoresTest {
   
   /**
   * Test of validarAsistenciaAlumno method, of class Validadores.
+  * @throws logicaDeNegocios.ExcepcionPersonal
   */
   @Test
   public void testValidarAsistenciaAlumnoTres() throws ExcepcionPersonal {

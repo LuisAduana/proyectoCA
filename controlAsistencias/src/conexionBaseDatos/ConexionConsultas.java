@@ -11,7 +11,7 @@ import logicaDeNegocios.Alumno;
 import logicaDeNegocios.ExperienciaEducativa;
 
 /**
-* Clase encargada de realizar exclusivamente consultas a la Base de Datos
+* Clase encargada de realizar exclusivamente consultas a la Base de Datos.
 * @author Luis Bonilla
 * @version 1.0
 */
@@ -29,8 +29,8 @@ public class ConexionConsultas {
     try {
       Statement estatuto = conexion.getConnection().createStatement();
       ResultSet resultado = estatuto.executeQuery("SELECT nombreAlumno, apeAlumnoPat, "
-          + "apeAlumnoMat, asistencia FROM alumno WHERE nrc = " + nrc +"");
-      while(resultado.next()) {
+          + "apeAlumnoMat, asistencia FROM alumno WHERE nrc = " + nrc + "");
+      while (resultado.next()) {
         alumno = new Alumno();
         alumno.setNombreAlumno(resultado.getString("nombreAlumno"));
         alumno.setApePatAlumno(resultado.getString("apeAlumnoPat"));
@@ -67,7 +67,7 @@ public class ConexionConsultas {
       Statement estatuto = conexion.getConnection().createStatement();
       ResultSet resultado = estatuto.executeQuery("SELECT * FROM alumno WHERE asistencia > "
           + porcentajeOrdinario + " AND asistencia < " + noClases + " AND nrc = " + nrc + "");
-      while(resultado.next()) {
+      while (resultado.next()) {
         alumno = new Alumno();
         alumno.setNombreAlumno(resultado.getString("nombreAlumno"));
         alumno.setApePatAlumno(resultado.getString("apeAlumnoPat"));
@@ -104,7 +104,7 @@ public class ConexionConsultas {
       ResultSet resultado = estatuto.executeQuery("SELECT * FROM alumno WHERE asistencia > "
           + porcentajeExtraordinario + " AND asistencia < " + porcentajeOrdinario + " AND nrc = " 
           + nrc + "");
-      while(resultado.next()) {
+      while (resultado.next()) {
         alumno = new Alumno();
         alumno.setNombreAlumno(resultado.getString("nombreAlumno"));
         alumno.setApePatAlumno(resultado.getString("apeAlumnoPat"));
@@ -125,7 +125,7 @@ public class ConexionConsultas {
   
   /**
   * Método encargado de realizar búsquedas de alumnos que tienen derecho a presentar el 
-  * examen de título
+  * examen de título.
   * @param nrc Recibe un NRC que indica de qué Experiencia se buscarán los alumnos
   * @param porcentajeTitulos Recibe número de asistencias mínimas que debe tener el alumno
   * @param porcentajeExtraordinario Recibe número de asistencias máximas que debe tener el alumno
@@ -141,7 +141,7 @@ public class ConexionConsultas {
       ResultSet resultado = estatuto.executeQuery("SELECT * FROM alumno WHERE asistencia > "
           + porcentajeTitulos + " AND asistencia < " + porcentajeExtraordinario + " AND "
           + "nrc = " + nrc + " AND repite = 0");
-      while(resultado.next()) {
+      while (resultado.next()) {
         alumno = new Alumno();
         alumno.setNombreAlumno(resultado.getString("nombreAlumno"));
         alumno.setApePatAlumno(resultado.getString("apeAlumnoPat"));
@@ -161,10 +161,10 @@ public class ConexionConsultas {
   }
   
   /**
-  * Método encargado de realizar una búsqueda de Experiencias Educativas
+  * Método encargado de realizar una búsqueda de Experiencias Educativas.
   * @return Regresa una lista de objetos Alumno si la búsqueda se realizó con éxito
   */
-  public ArrayList<ExperienciaEducativa> buscarExperiencias(){
+  public ArrayList<ExperienciaEducativa> buscarExperiencias() {
     ConexionBaseDatos conexion = new ConexionBaseDatos();
     ArrayList<ExperienciaEducativa> listaExperiencias = new ArrayList<ExperienciaEducativa>();
     ExperienciaEducativa experiencia;
@@ -172,8 +172,9 @@ public class ConexionConsultas {
     try {
       Statement estatuto = conexion.getConnection().createStatement();
       ResultSet resultado = 
-          estatuto.executeQuery("SELECT nrc, nombreExperiencia, noClases FROM experienciaeducativa");
-      while(resultado.next()) {
+          estatuto.executeQuery("SELECT nrc, nombreExperiencia, noClases FROM "
+            + "experienciaeducativa");
+      while (resultado.next()) {
         experiencia = new ExperienciaEducativa();
         experiencia.setNombreExperiencia(resultado.getString("nombreExperiencia"));
         experiencia.setNrc(Integer.parseInt(resultado.getString("nrc")));
@@ -211,7 +212,7 @@ public class ConexionConsultas {
       statement.setString(1, nrc);
       resultado = statement.executeQuery();
       
-      while(resultado.next() == true) {
+      while (resultado.next() == true) {
         experiencia = new ExperienciaEducativa();
         experiencia.setNrc(resultado.getInt("nrc"));
         experiencia.setNombreExperiencia(resultado.getString("nombreExperiencia"));
@@ -250,7 +251,7 @@ public class ConexionConsultas {
       statement.setInt(2, nrc);
       resultado = statement.executeQuery();
       
-      while(resultado.next() == true) {
+      while (resultado.next() == true) {
         alumno = new Alumno();
         alumno.setMatricula(resultado.getString("matricula"));
         alumno.setNombreAlumno(resultado.getString("nombreAlumno"));
@@ -273,7 +274,8 @@ public class ConexionConsultas {
   /**
   * Método encargado de buscar la existencia de algunos alumnos en la Base de Datos.
   * @param nrc Recibe un NRC que indica de que Experiencia son los Alumnos a Buscar
-  * @return Regresa true en caso de que exista algun alumno con los parámetros dados, false de lo contrario
+  * @return Regresa true en caso de que exista algun alumno con los parámetros dados, 
+  *     false de lo contrario
   */
   public boolean existenAlumnos(int nrc) {
     boolean existeNrc = false;
@@ -290,8 +292,8 @@ public class ConexionConsultas {
       statement.setInt(1, nrc);
       resultado = statement.executeQuery();
       
-      if(resultado.next()){
-        if(resultado.getRow() > 0){
+      if (resultado.next()) {
+        if (resultado.getRow() > 0) {
           existeNrc = true;
         }
       }
@@ -300,7 +302,7 @@ public class ConexionConsultas {
       conexion.desconectar();
       statement.close();
       
-    } catch (SQLException excepcion){
+    } catch (SQLException excepcion) {
       System.out.println("Error en Consulta de Experiencia Educativa" + excepcion.getMessage());
     }
     
@@ -336,8 +338,8 @@ public class ConexionConsultas {
       statement.setInt(4, nrc);
       resultado = statement.executeQuery();
       
-      if(resultado.next()){
-        if(resultado.getRow() > 0){
+      if (resultado.next()) {
+        if (resultado.getRow() > 0) {
           existeMatricula = true;
         }
       }
@@ -346,7 +348,7 @@ public class ConexionConsultas {
       conexion.desconectar();
       statement.close();
       
-    } catch (SQLException excepcion){
+    } catch (SQLException excepcion) {
       System.out.println("Error en Consulta de Experiencia Educativa" + excepcion.getMessage());
     }
     
@@ -375,8 +377,8 @@ public class ConexionConsultas {
       statement.setInt(2, nrc);
       resultado = statement.executeQuery();
       
-      if(resultado.next()){
-        if(resultado.getRow() > 0){
+      if (resultado.next()) {
+        if (resultado.getRow() > 0) {
           existeMatricula = true;
         }
       }
@@ -385,7 +387,7 @@ public class ConexionConsultas {
       conexion.desconectar();
       statement.close();
       
-    } catch (SQLException excepcion){
+    } catch (SQLException excepcion) {
       System.out.println("Error en Consulta de Experiencia Educativa" + excepcion.getMessage());
     }
     
@@ -412,8 +414,8 @@ public class ConexionConsultas {
       statement.setString(1, nombreExperiencia);
       resultado = statement.executeQuery();
       
-      if(resultado.next()){
-        if(resultado.getRow() > 0){
+      if (resultado.next()) {
+        if (resultado.getRow() > 0) {
           existeExperiencia = true;
         }
       }
@@ -422,7 +424,7 @@ public class ConexionConsultas {
       conexion.desconectar();
       statement.close();
       
-    } catch (SQLException excepcion){
+    } catch (SQLException excepcion) {
       System.out.println("Error en Consulta de Experiencia Educativa" + excepcion.getMessage());
     }
     
@@ -430,7 +432,7 @@ public class ConexionConsultas {
   }
   
   /**
-  * Método encargado de buscar si existe una Experiencia Educativa con un NRC ingresado
+  * Método encargado de buscar si existe una Experiencia Educativa con un NRC ingresado.
   * @param nrc Recibe el NRC que indica la Experiencia que se buscará
   * @return Regresa true en caso de que se encuentre una Experiencia con el NRC, false de otro modo
   */
@@ -449,8 +451,8 @@ public class ConexionConsultas {
       statement.setInt(1, nrc);
       resultado = statement.executeQuery();
       
-      if(resultado.next()){
-        if(resultado.getRow() > 0){
+      if (resultado.next()) {
+        if (resultado.getRow() > 0) {
           existeExperiencia = true;
         }
       }
@@ -459,7 +461,7 @@ public class ConexionConsultas {
       conexion.desconectar();
       statement.close();
       
-    } catch (SQLException excepcion){
+    } catch (SQLException excepcion) {
       System.out.println("Error en Consulta de Experiencia Educativa" + excepcion.getMessage());
     }
     
@@ -493,7 +495,7 @@ public class ConexionConsultas {
       statement.setInt(4, nrc);
       resultado = statement.executeQuery();
       
-      while(resultado.next()) {
+      while (resultado.next()) {
         asistencia = resultado.getInt("asistencia");
       }
             

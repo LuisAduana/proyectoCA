@@ -16,14 +16,14 @@ public class ConsultasBaseDatos {
   
   /**
   * Método encargado de construir una Matriz de tipo Objeto del resultado obtenido de realizar una
-  * consulta de buscar Alumnos a la Base de Datos
+  *     consulta de buscar Alumnos a la Base de Datos.
   * @param nrc Recibe un NRC que indica que de qué Experiencia será construida 
   * @return Regresa una matriz como resultado de la búsqueda de los alumnos en la Base de Datos
   */
   public Object[][] obtenerMatrizAlumno(int nrc) {
     ArrayList<Alumno> listaAlumnos = consulta.buscarAlumnos(nrc);
     Object matrizListas[][] = new Object[listaAlumnos.size()][4];
-    for(int i = 0; i < listaAlumnos.size(); i++) {
+    for (int i = 0; i < listaAlumnos.size(); i++) {
       matrizListas[i][0] = listaAlumnos.get(i).getNombeAlumno() + "";
       matrizListas[i][1] = listaAlumnos.get(i).getApeMatAlumno()+ "";
       matrizListas[i][2] = listaAlumnos.get(i).getApePatAlumno()+ "";
@@ -34,7 +34,7 @@ public class ConsultasBaseDatos {
   
   /**
   * Método encargado de construir una Matriz de tipo Objeto del resultado obtenido de realizar una
-  * consulta de buscar Alumnos que tengan derecho al examen Ordinario.
+  *     consulta de buscar Alumnos que tengan derecho al examen Ordinario.
   * @param nrc Recibe un NRC que indica de qué Experiencia serán los alumnos buscados
   * @param porcentajeOrdinario Recibe el número mínimo de asistencias del Alumno
   * @param noClases Recibe el número máximo de asistencias del Alumno
@@ -44,7 +44,7 @@ public class ConsultasBaseDatos {
     ArrayList<Alumno> listaAlumnos = consulta.buscarAlumnosOrdinario(nrc, porcentajeOrdinario, 
         noClases);
     Object matrizListas[][] = new Object[listaAlumnos.size()][3];
-    for(int i = 0; i < listaAlumnos.size(); i++) {
+    for (int i = 0; i < listaAlumnos.size(); i++) {
       matrizListas[i][0] = listaAlumnos.get(i).getNombeAlumno() + "";
       matrizListas[i][1] = listaAlumnos.get(i).getApeMatAlumno()+ "";
       matrizListas[i][2] = listaAlumnos.get(i).getApePatAlumno()+ "";
@@ -65,7 +65,7 @@ public class ConsultasBaseDatos {
     ArrayList<Alumno> listaAlumnos = consulta.buscarAlumnosExtraordinario(nrc, 
         porcentajeExtraordinario, porcentajeOrdinario);
     Object matrizListas[][] = new Object[listaAlumnos.size()][3];
-    for(int i = 0; i < listaAlumnos.size(); i++) {
+    for (int i = 0; i < listaAlumnos.size(); i++) {
       matrizListas[i][0] = listaAlumnos.get(i).getNombeAlumno() + "";
       matrizListas[i][1] = listaAlumnos.get(i).getApeMatAlumno()+ "";
       matrizListas[i][2] = listaAlumnos.get(i).getApePatAlumno()+ "";
@@ -86,10 +86,10 @@ public class ConsultasBaseDatos {
     ArrayList<Alumno> listaAlumnos = consulta.buscarAlumnosTitulos(nrc, 
         porcentajeTitulos, porcentajeExtraordinario);
     Object matrizListas[][] = new Object[listaAlumnos.size()][3];
-    for(int i = 0; i < listaAlumnos.size(); i++) {
+    for (int i = 0; i < listaAlumnos.size(); i++) {
       matrizListas[i][0] = listaAlumnos.get(i).getNombeAlumno() + "";
-      matrizListas[i][1] = listaAlumnos.get(i).getApeMatAlumno()+ "";
-      matrizListas[i][2] = listaAlumnos.get(i).getApePatAlumno()+ "";
+      matrizListas[i][1] = listaAlumnos.get(i).getApeMatAlumno() + "";
+      matrizListas[i][2] = listaAlumnos.get(i).getApePatAlumno() + "";
     }
     return matrizListas;
   }
@@ -104,7 +104,7 @@ public class ConsultasBaseDatos {
     ArrayList<ExperienciaEducativa> listaExperiencias = 
         consultarExperiencias.buscarExperiencias();
     String matrizListas[][] = new String[listaExperiencias.size()][3];
-    for(int i = 0; i < listaExperiencias.size(); i++){
+    for (int i = 0; i < listaExperiencias.size(); i++) {
       matrizListas[i][0] = listaExperiencias.get(i).getNombreExperiencia() + "";
       matrizListas[i][1] = listaExperiencias.get(i).getNrc() + "";
       matrizListas[i][2] = listaExperiencias.get(i).getNoClases() + "";
@@ -137,9 +137,10 @@ public class ConsultasBaseDatos {
   
   /**
   * Método encargado de realizar una conexión para saber si existe un Alumno registrado en una
-  * Experiencia Educativa 
+  *     Experiencia Educativa. 
   * @param existenAlumnos Recibe el NRC de la Experiencia en donde será registrado el Alumno
-  * @return Regresa true en caso de que exista un alumno registrado en la Experiencia, false de lo contrario
+  * @return Regresa true en caso de que exista un alumno registrado en la Experiencia, false 
+  *     de lo contrario
   */
   public boolean consultarExitenAlumnos(String existenAlumnos) {
     ConexionConsultas consultarAlumno = new ConexionConsultas();

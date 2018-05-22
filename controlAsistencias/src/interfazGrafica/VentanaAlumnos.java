@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,9 +29,9 @@ import logicaDeNegocios.RegistrarBaseDatos;
 
 /**
 *
-* @author BiiR4
+* @author Luis Bonilla
 */
-public class VentanaAlumnos extends JPanel implements ActionListener, MouseListener{
+class VentanaAlumnos extends JPanel implements ActionListener, MouseListener {
   
   private JButton botonConsultarAlumno;
   private JButton botonRegistrarAlumno;
@@ -39,6 +40,7 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
   private JLabel labelImagenLogoUv;
   private JLabel labelTitulo;
   private JScrollPane paneTabla;
+  private JScrollPane paneTablaOrdinarios;
   private JTable tablaAlumnos;
   private JTable tablaAlumnosExtraordinario;
   private JTable tablaAlumnosOrdinario;
@@ -47,7 +49,7 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
   private int porcentajeExtraordinario = 0;
   private int porcentajeTitulo = 0;
   
-  VentanaAlumnos(){
+  VentanaAlumnos() {
     setBounds(0, 0, 540, 650);
     setLayout(null);
     setBackground(Color.white);
@@ -73,7 +75,6 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
   }
   
   private void construirTablaAsistencia() {
-    
     ConsultasBaseDatos consulta = new ConsultasBaseDatos();
     String titulos[] = {"Nombre", "Ape. Paterno", "Ape. Materno", "Asistencia"};
     tablaAlumnos = new JTable();
@@ -85,7 +86,7 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
     };
     Object informacion[][] = consulta.obtenerMatrizAlumno(nrc);
     
-     tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(informacion, titulos){
+     tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(informacion, titulos) {
       Class[] tipos = tiposColumnas;
       
       @Override
@@ -109,16 +110,16 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
     
     tablaAlumnos.addMouseListener(new MouseAdapter() {
       @Override
-      public void mouseClicked(MouseEvent e){
+      public void mouseClicked(MouseEvent e) {
         int fila = tablaAlumnos.rowAtPoint(e.getPoint());
         int columna = tablaAlumnos.columnAtPoint(e.getPoint());
         String nombreAlumno = "";
         String apellidoPatAlumno = "";
         String apellidoMatAlumno = "";
         
-        if(tablaAlumnos.getModel().getColumnClass(columna).equals(JButton.class)) {
-          for(int i = 0; i < tablaAlumnos.getModel().getColumnCount(); i++) {
-            if(!tablaAlumnos.getModel().getColumnClass(i).equals(JButton.class)) {
+        if (tablaAlumnos.getModel().getColumnClass(columna).equals(JButton.class)) {
+          for (int i = 0; i < tablaAlumnos.getModel().getColumnCount(); i++) {
+            if (!tablaAlumnos.getModel().getColumnClass(i).equals(JButton.class)) {
               nombreAlumno = tablaAlumnos.getModel().getValueAt(fila, 0).toString();
               apellidoPatAlumno = tablaAlumnos.getModel().getValueAt(fila, 1).toString();
               apellidoMatAlumno = tablaAlumnos.getModel().getValueAt(fila, 2).toString();
@@ -127,19 +128,19 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
           ConsultasBaseDatos consultar = new ConsultasBaseDatos();
           int asistencia = consultar.consultarAsistencia(nombreAlumno, apellidoPatAlumno, 
               apellidoMatAlumno, nrc);
-          System.out.println("Asistencia antes de registrar = " + asistencia);
           asistencia = asistencia + 1;
-          
           RegistrarBaseDatos registrar = new RegistrarBaseDatos();
-          registrar.registrarAsistencia(nombreAlumno, apellidoPatAlumno, apellidoMatAlumno,
-              nrc, asistencia);
-          System.out.println("Asistencia despues de registrar = " + asistencia);
+          if (asistencia < noClases) {
+            registrar.registrarAsistencia(nombreAlumno, apellidoPatAlumno, apellidoMatAlumno,
+                nrc, asistencia);
+          } else {
+            JOptionPane.showMessageDialog(null, "Este Alumno alcanzó el máximo de asistencias");
+          }
         }
       }
-    
     });
-    paneTabla.setViewportView(tablaAlumnos);
-    paneTabla.repaint();
+    //paneTabla.setViewportView(tablaAlumnos);
+    //paneTabla.repaint();
   }
   
   private void construirTablaOrdinarios() {
@@ -147,7 +148,7 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
     String titulos[] = {"Nombre", "Ape. Paterno", "Ape. Materno"};
     Object informacion[][] = consulta.obtenerMatrizAlumnoOrdinario(nrc, porcentajeOrdinario, 
         noClases);
-    tablaAlumnosOrdinario = new JTable(informacion, titulos){
+    tablaAlumnosOrdinario = new JTable(informacion, titulos) {
       @Override
       public boolean isCellEditable(int rowIndex, int colIndex) {
         return false;
@@ -156,8 +157,8 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
     tablaAlumnosOrdinario.setFocusable(false);
     JTableHeader cabecera = tablaAlumnosOrdinario.getTableHeader();
     cabecera.setPreferredSize(new Dimension(10, 20));
-    paneTabla.setViewportView(tablaAlumnosOrdinario);
-    paneTabla.repaint();
+    //paneTabla.setViewportView(tablaAlumnosOrdinario);
+    //paneTabla.repaint();
   }
   
   private void construirTablaExtraordinarios() {
@@ -165,7 +166,7 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
     String titulos[] = {"Nombre", "Ape. Paterno", "Ape. Materno"};
     Object informacion[][] = consulta.obtenerMatrizAlumnoExtraordinario(nrc, 
         porcentajeExtraordinario, porcentajeOrdinario);
-    tablaAlumnosExtraordinario = new JTable(informacion, titulos){
+    tablaAlumnosExtraordinario = new JTable(informacion, titulos) {
       @Override
       public boolean isCellEditable(int rowIndex, int colIndex) {
         return false;
@@ -182,7 +183,7 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
     String titulos[] = {"Nombre", "Ape. Paterno", "Ape. Materno"};
     Object informacion[][] = consulta.obtenerMatrizAlumnoTitulos(nrc, 
         porcentajeTitulo, porcentajeExtraordinario);
-    tablaAlumnosTitulos = new JTable(informacion, titulos){
+    tablaAlumnosTitulos = new JTable(informacion, titulos) {
       @Override
       public boolean isCellEditable(int rowIndex, int colIndex) {
         return false;
@@ -198,6 +199,12 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
     paneTabla = new JScrollPane();
     paneTabla.setBounds(15, 220, 500, 386);
     this.add(paneTabla);
+  }
+  
+  private void cargarTablaAlumnosOrdinario() {
+    paneTablaOrdinarios = new JScrollPane();
+    paneTablaOrdinarios.setBounds(15, 220, 500, 386);
+    this.add(paneTablaOrdinarios);
   }
   
   private void cargarBotones() {
@@ -290,13 +297,17 @@ public class VentanaAlumnos extends JPanel implements ActionListener, MouseListe
       
       porcentajesAsistencias();
       cargarTablaAlumnos();
+      construirTablaAsistencia();
+      construirTablaOrdinarios();
       
       if(comboTablas.getSelectedItem() == "TODOS") {
-        construirTablaAsistencia();
+        tablaAlumnosOrdinario.removeAll();
+        paneTabla.setViewportView(tablaAlumnos);
       }
       
       if(comboTablas.getSelectedItem() == "ORDI") {
-        construirTablaOrdinarios();
+        tablaAlumnos.removeAll();
+        paneTabla.setViewportView(tablaAlumnosOrdinario);
       }
       
       if(comboTablas.getSelectedItem() == "EXTRA") {

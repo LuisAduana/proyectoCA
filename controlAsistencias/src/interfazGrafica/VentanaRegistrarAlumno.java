@@ -18,9 +18,9 @@ import logicaDeNegocios.Validadores;
 
 /**
 *
-* @author BiiR4
+* @author Luis Bonilla
 */
-public class VentanaRegistrarAlumno extends JDialog implements ActionListener {
+class VentanaRegistrarAlumno extends JDialog implements ActionListener {
 
   private JButton cancelar;
   private JButton registrar;
@@ -36,7 +36,7 @@ public class VentanaRegistrarAlumno extends JDialog implements ActionListener {
   private JTextField textoApePaterno;
   private JPanel panelAlumno;
     
-  public VentanaRegistrarAlumno(VentanaPrincipal ventanaPrincipal, boolean modal) {
+  VentanaRegistrarAlumno(VentanaPrincipal ventanaPrincipal, boolean modal) {
     super(ventanaPrincipal, modal);
     setSize(500, 350);
     setTitle("Registro");
@@ -146,10 +146,10 @@ public class VentanaRegistrarAlumno extends JDialog implements ActionListener {
   
   @Override
   public void actionPerformed(ActionEvent evento) {
-    if(evento.getSource() == registrar) {
+    if (evento.getSource() == registrar) {
       registrar();
     }
-    if(evento.getSource() == cancelar) {
+    if (evento.getSource() == cancelar) {
       dispose();
     }
   }

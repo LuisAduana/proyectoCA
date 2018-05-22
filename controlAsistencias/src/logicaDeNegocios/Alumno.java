@@ -42,7 +42,7 @@ public class Alumno {
     return matricula;
   }
   
-  public void setMatricula(String matricula){
+  public void setMatricula(String matricula) {
     this.matricula = matricula;
   }
   

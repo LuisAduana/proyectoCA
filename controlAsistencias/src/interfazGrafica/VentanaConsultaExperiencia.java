@@ -18,9 +18,9 @@ import logicaDeNegocios.Validadores;
 
 /**
 *
-* @author BiiR4
+* @author Luis Bonilla
 */
-class VentanaConsultaExperiencia extends JDialog implements ActionListener{
+class VentanaConsultaExperiencia extends JDialog implements ActionListener {
 
   private JButton buscar;
   private JButton eliminar;
@@ -172,24 +172,24 @@ class VentanaConsultaExperiencia extends JDialog implements ActionListener{
   
   @Override
   public void actionPerformed(ActionEvent evento) {
-    if(evento.getSource() == buscar) {
+    if (evento.getSource() == buscar) {
       consultarExperiencia();
     }
     
-    if(evento.getSource() == modificar) {
+    if (evento.getSource() == modificar) {
       modificarExperiencia();
     }
     
-    if(evento.getSource() == cancelar) {
+    if (evento.getSource() == cancelar) {
       limpiarVentana();
       dispose();
     }
     
-    if(evento.getSource() == eliminar) {
+    if (evento.getSource() == eliminar) {
       eliminarExperiencia();
     }
     
-    if(evento.getSource() == nuevo) {
+    if (evento.getSource() == nuevo) {
       limpiarVentana();
       nuevo.setVisible(false);
       buscar.setVisible(true);
@@ -203,22 +203,22 @@ class VentanaConsultaExperiencia extends JDialog implements ActionListener{
   
   private void eliminarExperiencia() {
     String idExp = idNrc.getText();
-      if("".equals(idExp)) {
+      if ("".equals(idExp)) {
         JOptionPane.showMessageDialog(null, "Debe buscar un usuario para eliminarlo");
       } else {
         int respuesta = 0;
         respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas eliminar la"
             + " E.E?", "ALERTA", respuesta);
-        if(respuesta == JOptionPane.YES_OPTION) {
+        if (respuesta == JOptionPane.YES_OPTION) {
           ConsultasBaseDatos consultar = new ConsultasBaseDatos();
           boolean existenAlumnos = consultar.consultarExitenAlumnos(idExp);
-          if(existenAlumnos) {
+          if (existenAlumnos) {
             int segundaRespuesta = 0;
             respuesta = JOptionPane.showConfirmDialog(null, "Hay alumnos registrados en esta E.E "
                 + "si la elimina, \n todos los alumnos registrados de la E.E serán eliminados", 
                 "ALERTA", segundaRespuesta);
-            if(respuesta == JOptionPane.YES_OPTION){
-              if(eliminarTodosAlumnos(idExp)) {
+            if (respuesta == JOptionPane.YES_OPTION) {
+              if (eliminarTodosAlumnos(idExp)) {
                 eliminarSinExistencia(idExp);
               } else {
                 JOptionPane.showMessageDialog(null, "Error al intentar "
@@ -245,7 +245,7 @@ class VentanaConsultaExperiencia extends JDialog implements ActionListener{
   
   private void eliminarSinExistencia(String idExp) {
     EliminacionBaseDatos eliminar = new EliminacionBaseDatos();
-    if(eliminar.eliminarExperiencia(idExp)) {
+    if (eliminar.eliminarExperiencia(idExp)) {
       JOptionPane.showMessageDialog(null, "Experiencia eliminada con éxito");
       nuevo.setVisible(false);
       buscar.setVisible(true);
@@ -261,7 +261,7 @@ class VentanaConsultaExperiencia extends JDialog implements ActionListener{
   
   private void modificarExperiencia() {
     String idExp = idNrc.getText();
-    if("".equals(idExp)) {
+    if ("".equals(idExp)) {
       JOptionPane.showMessageDialog(null, "Debe buscar un usuario para modificarlo");
     } else {
       Validadores validar = new Validadores();
@@ -269,8 +269,8 @@ class VentanaConsultaExperiencia extends JDialog implements ActionListener{
       RegistrarBaseDatos registrar = new RegistrarBaseDatos();
       Integer nrc = validar.validarNrc(nrcTexto.getText().trim());
       Integer noClases = validar.validarNoClases(noClasesTexto.getText().trim());
-      if(nrc != null) {
-        if(noClases != null) {
+      if (nrc != null) {
+        if (noClases != null) {
           int nrcEntero = Integer.parseInt(nrcTexto.getText().trim());
           int noDeClases = Integer.parseInt(noClasesTexto.getText().trim());
           String nombreExperiencia = nombreTexto.getText().trim();
@@ -286,7 +286,15 @@ class VentanaConsultaExperiencia extends JDialog implements ActionListener{
             experiencia.setNrc(nrcEntero);
             experiencia.setNoClases(noDeClases);
 
-            registrar.modificarExperiencia(experiencia, nrcExperiencia);
+            ConsultasBaseDatos consultar = new ConsultasBaseDatos();
+            boolean existenAlumnos = consultar.consultarExitenAlumnos(idExp);
+            if (existenAlumnos) {
+              JOptionPane.showMessageDialog(null, "Existen registros de Alumnos en esta "
+                  + "Experiencia Educativa. \n Debe eliminar todos los alumnos para poder cambiar"
+                  + "el NRC, o bien eliminar la E.E y crear una nueva");
+            } else {
+              registrar.modificarExperiencia(experiencia, nrcExperiencia);
+            }
           } catch (ExcepcionPersonal excepcion) {
             JOptionPane.showMessageDialog(null, "" + excepcion.getMessage() + "");
           }
@@ -314,7 +322,7 @@ class VentanaConsultaExperiencia extends JDialog implements ActionListener{
     Validadores validar = new Validadores();
     RegistrarBaseDatos registrar = new RegistrarBaseDatos();
     Integer nrc = validar.validarNrc(nrcBuscar.getText().trim());
-    if(nrc != null) {
+    if (nrc != null) {
       int nrcEntero = Integer.parseInt(nrcBuscar.getText().trim());
       
       try {
@@ -323,7 +331,7 @@ class VentanaConsultaExperiencia extends JDialog implements ActionListener{
         ConsultasBaseDatos consulta = new ConsultasBaseDatos();
         ExperienciaEducativa experiencia = consulta.consultarExperiencia(nrcBuscar.getText().trim());
 
-        if(experiencia != null) {
+        if (experiencia != null) {
           nombreTexto.setText(experiencia.getNombreExperiencia());
           nrcTexto.setText(experiencia.getNrc()+"");
           idNrc.setText(experiencia.getNrc()+"");

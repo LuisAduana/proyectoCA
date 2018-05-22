@@ -20,9 +20,9 @@ import logicaDeNegocios.Validadores;
 
 /**
 *
-* @author BiiR4
+* @author Luis Bonilla
 */
-public class VentanaConsultaAlumno extends JDialog implements ActionListener{
+class VentanaConsultaAlumno extends JDialog implements ActionListener {
   
   private JButton buscar;
   private JButton cancelar;
@@ -218,23 +218,23 @@ public class VentanaConsultaAlumno extends JDialog implements ActionListener{
   @Override
   public void actionPerformed(ActionEvent evento) {
     
-    if(evento.getSource() == buscar) {
+    if (evento.getSource() == buscar) {
       buscarAlumno();
     }
     
-    if(evento.getSource() == nuevo) {
+    if (evento.getSource() == nuevo) {
       nuevaBusqueda();
     }
     
-    if(evento.getSource() == cancelar) {
+    if (evento.getSource() == cancelar) {
       dispose();
     }
     
-    if(evento.getSource() == modificar) {
+    if (evento.getSource() == modificar) {
       modificarAlumno();
     }
     
-    if(evento.getSource() == eliminar) {
+    if (evento.getSource() == eliminar) {
       eliminarAlumno();
     }
     
@@ -242,15 +242,15 @@ public class VentanaConsultaAlumno extends JDialog implements ActionListener{
   
   private void eliminarAlumno() {
     String idMatricula = matriculaOculta.getText().trim();
-    if(idMatricula.equals("")) {
+    if (idMatricula.equals("")) {
       JOptionPane.showMessageDialog(null, "Debe buscar un ALUMNO para eliminarlo");
     } else {
       int respuesta = 0;
       respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas eliminar el"
             + " Alumno?", "ALERTA", respuesta);
-      if(respuesta == JOptionPane.YES_OPTION) {
+      if (respuesta == JOptionPane.YES_OPTION) {
         EliminacionBaseDatos eliminar = new EliminacionBaseDatos();
-        if(eliminar.eliminarAlumno(idMatricula, nrc)) {
+        if (eliminar.eliminarAlumno(idMatricula, nrc)) {
           JOptionPane.showMessageDialog(null, "Alumno eliminado con éxito");
         } else {
           JOptionPane.showMessageDialog(null, "Error al eliminar Alumno");
@@ -263,7 +263,7 @@ public class VentanaConsultaAlumno extends JDialog implements ActionListener{
   
   private void modificarAlumno() {
     String idMatricula = matriculaOculta.getText().trim();
-    if(idMatricula.equals("")) {
+    if (idMatricula.equals("")) {
       JOptionPane.showMessageDialog(null, "Debe buscar un ALUMNO para modificarlo");
     } else {
       String matricula = matriculaTexto.getText().trim();

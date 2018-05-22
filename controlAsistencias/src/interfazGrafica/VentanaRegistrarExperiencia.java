@@ -16,7 +16,7 @@ import logicaDeNegocios.Validadores;
 
 /**
 *
-* @author BiiR4
+* @author Luis Bonilla
 */
 class VentanaRegistrarExperiencia extends JDialog implements ActionListener {
 
@@ -121,10 +121,10 @@ class VentanaRegistrarExperiencia extends JDialog implements ActionListener {
   
   @Override
   public void actionPerformed(ActionEvent evento) {
-    if(evento.getSource() == registrar){
+    if (evento.getSource() == registrar) {
       registrar();
     }
-    if(evento.getSource() == cancelar) {
+    if (evento.getSource() == cancelar) {
       dispose();
     }
   }
@@ -134,8 +134,8 @@ class VentanaRegistrarExperiencia extends JDialog implements ActionListener {
     RegistrarBaseDatos registrar = new RegistrarBaseDatos();
     Integer nrc = validar.validarNrc(nrcTexto.getText().trim());
     Integer noClases = validar.validarNoClases(noClasesTexto.getText().trim());
-    if(nrc != null) {
-      if(noClases != null) {
+    if (nrc != null) {
+      if (noClases != null) {
         int nrcEntero = Integer.parseInt(nrcTexto.getText().trim());
         int noClasesEntero = Integer.parseInt(noClasesTexto.getText().trim());
         String nombreExperiencia = nombreTexto.getText().trim();

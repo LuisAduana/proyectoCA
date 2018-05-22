@@ -20,7 +20,7 @@ import logicaDeNegocios.ConsultasBaseDatos;
 
 /**
 *
-* @author BiiR4
+* @author Luis Bonilla
 */
 class VentanaExperiencias extends JPanel implements ActionListener, MouseListener {
   
@@ -137,23 +137,23 @@ class VentanaExperiencias extends JPanel implements ActionListener, MouseListene
     
     VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
     
-    if(evento.getSource() == botonActualizar) {
+    if (evento.getSource() == botonActualizar) {
       construirTabla();
       tablaExperiencias.repaint();
     }
     
-    if(evento.getSource() == botonRegistrarExperiencia) {
+    if (evento.getSource() == botonRegistrarExperiencia) {
       VentanaRegistrarExperiencia ventanaRegistro;
       ventanaRegistro = new VentanaRegistrarExperiencia(ventanaPrincipal, true);
     }
     
-    if(evento.getSource() == botonModificarExperiencia) {
+    if (evento.getSource() == botonModificarExperiencia) {
       VentanaConsultaExperiencia ventanaConsulta;
       ventanaConsulta = new VentanaConsultaExperiencia(ventanaPrincipal, true);
     }
     
-    if(evento.getSource() == botonPasarLista) {
-      if(!nrcSeleccionado.equals("")) {
+    if (evento.getSource() == botonPasarLista) {
+      if (!nrcSeleccionado.equals("")) {
         nrc = Integer.parseInt(nrcSeleccionado);
         noClases = Integer.parseInt(noClasesSeleccionado);
         setVisible(false);

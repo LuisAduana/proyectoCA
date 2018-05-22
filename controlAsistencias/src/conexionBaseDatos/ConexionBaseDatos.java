@@ -12,8 +12,8 @@ import java.sql.SQLException;
 * @version 1.0
 */
 class ConexionBaseDatos {
-  private static final String USERNAME = "root";
-  private static final String PASSWORD = "1234";
+  private static final String USERNAME = "usuarioControlAsistencia";
+  private static final String PASSWORD = "usuario123";
   private static final String BASEDATOS = 
       "jdbc:mysql://localhost:3306/controlasistencia?autoReconnect=true&useSSL=false";
   Connection conn = null;
@@ -25,10 +25,10 @@ class ConexionBaseDatos {
     try {
       Class.forName("com.mysql.jdbc.Driver");
       conn = DriverManager.getConnection(BASEDATOS, USERNAME, PASSWORD);
-      if(conn != null){
+      if (conn != null) {
         // En caso de ser exitosa la conexión, no hacer nada.
       }
-    } catch (ClassNotFoundException excepcion){
+    } catch (ClassNotFoundException excepcion) {
       System.out.println("ocurre una ClassNotFoundException: " + excepcion.getMessage());
     } catch (SQLException excepcion) {
       System.out.println("ocurre una SQLException: " + excepcion.getMessage());
@@ -39,14 +39,14 @@ class ConexionBaseDatos {
   * Método que regresa la conexión.
   * @return conn regresa la conexión a bierta
   */
-  Connection getConnection(){
+  Connection getConnection() {
     return conn;
   }
   
   /** 
   * Método para desconectar la conexión a la Base de Datos.
   */
-  void desconectar(){
+  void desconectar() {
     conn = null;
   }
 }

@@ -1,12 +1,11 @@
 package interfazGrafica;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JFrame;
 
 /**
 *
-* @author BiiR4
+* @author Luis Bonilla
 */
 class VentanaPrincipal extends JFrame {
   

@@ -10,7 +10,7 @@ public class ExcepcionPersonal extends Exception {
   public static final long serialVersionUID = 700L;
   
   /**
-  * Método encargado de regresar el mensaje de la ExcepcionPersonal
+  * Método encargado de regresar el mensaje de la ExcepcionPersonal.
   * @param mensaje Recibe el mensaje que se mostrará
   */
   public ExcepcionPersonal(String mensaje) {
